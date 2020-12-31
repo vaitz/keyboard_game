@@ -27,12 +27,12 @@ def on_press(key):
 
 def on_release(key):
     print(key)
-    # try:
-    client_tcp.sendall(key.char.encode())
-    # except ConnectionError:
-    #     pass
-    # except OSError:
-    #     pass
+    try:
+        client_tcp.sendall(key.char.encode())
+    except ConnectionError:
+        pass
+    except OSError:
+        pass
 
 # CLIENT MODES:
 # Looking for a server
@@ -97,20 +97,20 @@ while True:
     # waiting mode
     server_ip, server_port = lookup_server(client_udp)
     client_udp.close()
-    
+
     # create TCP socket for lookup
     client_tcp = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     # take care of case that connect to bad server or connection failed
     # client_tcp.settimeout(10)
-    # try:
-    ans = connect(server_ip, server_port, client_tcp)
-    if ans:
-        game(client_tcp)
-    client_tcp.close()
-    # except socket.timeout:
-    #     pass
-    # except ConnectionError:
-    #     pass
+    try:
+        ans = connect(server_ip, server_port, client_tcp)
+        if ans:
+            game(client_tcp)
+        client_tcp.close()
+    except socket.timeout:
+        pass
+    except ConnectionError:
+        pass
 
 
 

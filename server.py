@@ -57,19 +57,19 @@ def client_thread(client_socket_conn):
     team_name = data.decode().split('\n')[0]
     team_names[team_name] = 0
     
-    # try:
-    while True:
-        # waiting for the game to start
-        while game_on:
-            data = client_socket_conn.recv(1024)
-            if not data:
-                break
-            print(data.decode())
-            team_names[team_name] = team_names[team_name] + 1
-        # time.sleep(1)
-    client_socket_conn.close()
-    # except ConnectionError:
-    #     pass
+    try:
+        while True:
+            # waiting for the game to start
+            while game_on:
+                data = client_socket_conn.recv(1024)
+                if not data:
+                    break
+                print(data.decode())
+                team_names[team_name] = team_names[team_name] + 1
+            # time.sleep(1)
+        client_socket_conn.close()
+    except ConnectionError:
+        pass
 
 # TCP handler - thread
 def tcp_listener(server_tcp):
